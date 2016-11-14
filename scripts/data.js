@@ -1,251 +1,411 @@
-/**
- * Created by Aakash on 11/13/2016.
- */
 var questionsToTags = [
     [
-        "--disable-web-security for all browsers",
+        1, 
+        "--disable-web-security for all browsers", 
         [
-            "java",
-            "javascript",
-            "html",
-            "security",
+            "java", 
+            "javascript", 
+            "html", 
+            "security", 
             "cross-browser"
         ]
-    ],
+    ], 
     [
-        "--noauth_local_webserver equivalent in Java?",
+        2, 
+        "${fn:escapeXml(var)} does not display the value of var", 
         [
-            "java"
+            "java", 
+            "html", 
+            "jsp", 
+            "google-app-engine", 
+            "jstl"
         ]
-    ],
+    ], 
     [
-        "-?-&gt;-?- operator in Java",
+        3, 
+        "&#220; Instead of &amp;Uuml Causes Replacement Character (65533)", 
         [
-            "java",
-            "integer",
-            "int",
-            "operators",
-            "java-opts"
+            "java", 
+            "android", 
+            "html"
         ]
-    ],
+    ], 
     [
-        "-1 % 5 != 4 in java?",
+        4, 
+        "&lt;form action&gt; the requested resource is not available with servlet", 
         [
-            "java",
-            "android",
-            "arrays"
+            "java", 
+            "html", 
+            "tomcat", 
+            "servlets"
         ]
-    ],
+    ], 
     [
-        "-25 is listed as an even number in Java",
+        5, 
+        "&lt;form&gt; tag not included in first &lt;tr&gt; row of &lt;s:iterator&gt; in .jsp", 
         [
-            "java"
+            "java", 
+            "html", 
+            "forms", 
+            "jsp", 
+            "struts2"
         ]
-    ],
+    ], 
     [
-        "-accountId cannot be resolved or is not a field",
+        6, 
+        "&lt;h:selectOneMenu&gt; is not populating from the DB. I have referenced all the previous questions on this topic", 
         [
-            "java",
-            "arraylist",
-            "field"
+            "java", 
+            "jsf-2", 
+            "xhtml"
         ]
-    ],
+    ], 
     [
-        "-bash: !&quot;: event not found when trying to run Java program",
+        7, 
+        "&lt;html:select&gt; multiple values how to get values into Action form", 
         [
-            "java",
-            "bash",
-            "terminal"
+            "java", 
+            "html", 
+            "jsp", 
+            "struts-1"
         ]
-    ],
+    ], 
     [
-        "-bash: ./jdk-6u31-linux-i586.bin: cannot execute binary file",
+        8, 
+        "&lt;p:lineChart&gt; Tag Library supports namespace: http://primefaces.org/ui  but no tag was defined for name: lineChart", 
         [
-            "java",
-            "linux"
+            "java", 
+            "jsf", 
+            "primefaces", 
+            "xhtml", 
+            "linechart"
         ]
-    ],
+    ], 
     [
-        "-bash: syntax error near unexpected token `(&#39;",
+        9, 
+        "&lt;script&gt; tag not reported by SAX parser", 
         [
-            "java",
-            "sql",
-            "osx",
-            "bash",
-            "terminal"
+            "java", 
+            "html-parsing", 
+            "cq5", 
+            "saxparser"
         ]
-    ],
+    ], 
     [
-        "-C# / JAVA- Get PID on Applications run in CMD",
+        10, 
+        "&quot;...&quot; at the end of a Java String = not enough room in memory?", 
         [
-            "c#",
-            "java"
+            "java", 
+            "string", 
+            "parsing", 
+            "max", 
+            "htmlunit"
         ]
-    ],
+    ], 
     [
-        "-cp ./ Why do I always have to manually include the CWD to the CP when running Java?",
+        11, 
+        "&quot;IllegalArgumentException: Width (0) and height (0) cannot be &lt;= 0&quot; when using Html2Image", 
         [
-            "java",
-            "classpath",
-            "current-working-directory"
+            "java", 
+            "html", 
+            "rendering", 
+            "apache-poi", 
+            "doc"
         ]
-    ],
+    ], 
     [
-        "-Djavax.net.debug=ssl windows no output",
+        12, 
+        "(HTML) How to save conent of text area to a local variable?", 
         [
-            "java",
-            "windows",
-            "debugging",
-            "ssl",
-            "rcp"
+            "java", 
+            "html"
         ]
-    ],
+    ], 
     [
-        "-I flag JAVA command @ .bat CMAKE",
+        13, 
+        "(Using Twitter Api) Automatically authenticate java", 
         [
-            "java",
-            "windows",
-            "batch-file",
-            "cmake"
+            "java", 
+            "html", 
+            "twitter", 
+            "oauth", 
+            "scribe"
         ]
-    ],
+    ], 
     [
-        "-jar command the terminal gives me &quot;-bash: -jar: command not found&quot; but I have current java version",
+        14, 
+        ".innerHTML is not defined", 
         [
-            "java",
-            "jar",
-            "terminal"
+            "java", 
+            "jquery", 
+            "html", 
+            "asp.net", 
+            "dom"
         ]
-    ],
+    ], 
     [
-        "-javaagent Eclipse Spring",
+        15, 
+        "@ModelAttribute values don&#39;t correlated with values submitted in HTML Form", 
         [
-            "java",
-            "eclipse",
-            "spring",
-            "javaagents"
+            "java", 
+            "html", 
+            "spring"
         ]
-    ],
+    ], 
     [
-        "-libraryjars  what is the purpose in proguard?",
+        16, 
+        "@RequestMapping with @PathVariable URI is different", 
         [
-            "java",
-            "android",
-            "proguard"
+            "java", 
+            "html", 
+            "spring", 
+            "spring-mvc"
         ]
-    ],
+    ], 
     [
-        "-libraryjars has no effect on resulting apk  proguard",
+        17, 
+        "[java]Remove unecesarry Space", 
         [
-            "java",
-            "android",
-            "eclipse",
-            "proguard"
+            "java", 
+            "parsing", 
+            "html-parsing"
         ]
-    ],
+    ], 
     [
-        "-tsa or -tsacert timestamp for applet jar self-signed",
+        18, 
+        "[JSoup]How do I access a value inside of a tag", 
         [
-            "java",
-            "jar",
-            "applet",
-            "signed-applet"
+            "java", 
+            "html", 
+            "parsing", 
+            "jsoup"
         ]
-    ],
+    ], 
     [
-        "-XX:-PrintCompilation logging method",
+        19, 
+        "2 submit buttons - different queries ", 
         [
-            "java",
-            "jvm"
+            "java", 
+            "html", 
+            "forms", 
+            "jsp"
         ]
-    ],
+    ], 
     [
-        "-XX:+HeapDumpOnOutOfMemoryError Multiple heap dump creation",
+        20, 
+        "3 JLabel&#39;s on the Same Line When I Use &lt;br&gt;", 
         [
-            "java",
-            "java-ee"
+            "java", 
+            "html", 
+            "swing", 
+            "jlabel"
         ]
-    ],
+    ], 
     [
-        "-XX:+UseCompressedOops does not work in Eclipse",
+        21, 
+        "404 error with index.html file", 
         [
-            "java",
-            "eclipse",
-            "jvm"
+            "java", 
+            "html", 
+            "http-status-code-404", 
+            "web.xml", 
+            "file-structure"
         ]
-    ],
+    ], 
     [
-        "-XX:OnOutOfMemoryError doesn&#39;t work for java.lang.OutOfMemoryError: unable to create new native thread",
+        22, 
+        "About audio/ogg  video/ogg and application/ogg Mime Types", 
         [
-            "java",
-            "memory"
+            "java", 
+            "html5", 
+            "mime-types", 
+            "ogg"
         ]
-    ],
+    ], 
     [
-        "!!! FAILED BINDER TRANSACTION !!!bitmap list",
+        23, 
+        "About Luxand FaceSDK", 
         [
-            "java",
-            "android",
-            "arraylist",
-            "bitmap"
+            "java", 
+            "android", 
+            "html", 
+            "c", 
+            "xml"
         ]
-    ],
+    ], 
     [
-        "!array[0].isEmpty() returning NullPointer?",
+        24, 
+        "Access Endpoint.publish&#39;s web server", 
         [
-            "java",
-            "android",
-            "nullpointerexception"
+            "java", 
+            "html", 
+            "http", 
+            "jax-ws"
         ]
-    ],
+    ], 
     [
-        "!MESSAGE Unhandled event loop exception",
+        25, 
+        "Access to a Bean property from a Java JSP View is not working", 
         [
-            "java",
-            "eclipse",
-            "eclipse-plugin",
-            "eclipse-rcp"
+            "java", 
+            "html5", 
+            "jsp", 
+            "java-ee", 
+            "model-view-controller"
         ]
-    ],
+    ], 
     [
-        "#1467 - Failed to read auto-increment value from storage engine",
+        26, 
+        "Access to a static HTML page using servlet sessions", 
         [
-            "java",
-            "mysql",
-            "auto-increment"
+            "java", 
+            "html", 
+            "session", 
+            "servlets"
         ]
-    ],
+    ], 
     [
-        "#Resolved - Positional parameter does not exist in query // stored function call",
+        27, 
+        "Access video resource from file system in Java Spring web application", 
         [
-            "java",
-            "oracle",
-            "jpa",
-            "stored-functions",
-            "hibernate-entitymanager"
+            "java", 
+            "html5", 
+            "video", 
+            "web-applications", 
+            "resources"
         ]
-    ],
+    ], 
     [
-        "#sinfonier BOLT - Adding a jarray object to output",
+        28, 
+        "AccessControlException Applet in a html page", 
         [
-            "java"
+            "java", 
+            "html", 
+            "eclipse", 
+            "jar", 
+            "japplet"
         ]
-    ],
+    ], 
     [
-        "#xD; and #13; while reading and writing XML file",
+        29, 
+        "accesscontrolexception java.io.filepermission", 
         [
-            "java",
-            "xml",
-            "dom",
-            "stax"
+            "java", 
+            "html", 
+            "applet"
         ]
-    ],
+    ], 
     [
-        "$ bin/hadoop namenode -format STARTUP_MSG: host = java.net.UnknownHostException:",
+        30, 
+        "Accessing a child element in webdriver", 
         [
-            "java",
-            "hadoop",
-            "configuration"
+            "java", 
+            "html", 
+            "selenium", 
+            "xpath", 
+            "selenium-webdriver"
+        ]
+    ], 
+    [
+        31, 
+        "Accessing a dynamic website with HtmlUnit", 
+        [
+            "java", 
+            "htmlunit"
+        ]
+    ], 
+    [
+        32, 
+        "Accessing Java class from html web app", 
+        [
+            "java", 
+            "javascript", 
+            "html5", 
+            "webcontent"
+        ]
+    ], 
+    [
+        33, 
+        "Accessing Resources from JSP inside WEB-INF", 
+        [
+            "java", 
+            "html", 
+            "eclipse", 
+            "jsp", 
+            "servlets"
+        ]
+    ], 
+    [
+        34, 
+        "ace:tabSet tab change behavior", 
+        [
+            "java", 
+            "css", 
+            "jsf", 
+            "xhtml"
+        ]
+    ], 
+    [
+        35, 
+        "Adapt/Rewrite all Links in an HTML Document that is not necessarily XML Compliant", 
+        [
+            "java", 
+            "html", 
+            "scala", 
+            "rewrite"
+        ]
+    ], 
+    [
+        36, 
+        "Add a dialog box in Java without the swing package?", 
+        [
+            "java", 
+            "javascript", 
+            "html"
+        ]
+    ], 
+    [
+        37, 
+        "Add a new html tag to an html string in android", 
+        [
+            "java", 
+            "android", 
+            "html", 
+            "regex", 
+            "jsoup"
+        ]
+    ], 
+    [
+        38, 
+        "Add a property to a component Vaadin", 
+        [
+            "java", 
+            "html", 
+            "css", 
+            "layout", 
+            "vaadin"
+        ]
+    ], 
+    [
+        39, 
+        "add a serial number while performing iteration in thymeleaf", 
+        [
+            "java", 
+            "html", 
+            "spring", 
+            "web", 
+            "thymeleaf"
+        ]
+    ], 
+    [
+        40, 
+        "Add certificate exception in iframe", 
+        [
+            "java", 
+            "javascript", 
+            "html", 
+            "iframe", 
+            "ssl-certificate"
         ]
     ]
 ]
