@@ -8,41 +8,61 @@
     <title>Tags Questions</title>
 
     <style>
-        /* tag for text font*/
+        /* tag for text font
+        color : "#ffffff"; // text color
+        fill : "#ffffff" // fill color
+        stroke : "#ffffff" // border color
+        stroke-width : 4px // border width
+        */
         svg {
             font: 25px sans-serif;
         }
-
+        /* tag for all text */
         text {
             pointer-events: all;
         }
-
+        /* tag for inner rectangle*/
         .inner_node rect {
             pointer-events: all;
+            stroke: #222
         }
 
         /*for rectangles number inside */
         .inner_node rect.highlight {
-            stroke: #7e2014;
-            stroke-width: 5px;
+            stroke: #8CBA80;
+            stroke-width: 4px;
         }
-
+        /* tag for outer circle*/
         .outer_node circle {
-            fill: #306eff;
-            stroke: #b45033;
-            stroke-width: 1.5px;
+            fill: #658E9C;
+            stroke-width: 1px;
             pointer-events: all;
         }
 
         .outer_node circle.highlight
         {
-            stroke: #315B7E;
-            stroke-width: 4px;
+            fill: #8CBA80;
+            stroke-width: 2px;
         }
 
         .link {
             fill: none;
         }
+
+        /* tag for inner circle*/
+        .inner_circle circle {
+            ill: #306eff;
+            stroke: #b45033;
+            stroke-width: 1.5px;
+            pointer-events: all;
+        } 
+
+        .inner_circle circle.highlight
+        {
+            stroke: #315B7E;
+            stroke-width: 4px;
+        }
+
 
     </style>
 </head>
@@ -154,10 +174,10 @@
             .clamp(true);
 
     var diameter = 2000;
-    var rect_width = 200;
+    var rect_width = 300;
     var rect_height = 30;
 
-    var link_width = "1px";
+    var link_width = "0.75px";
 
     var il = data.inner.length;
     var ol = data.outer.length;
@@ -192,19 +212,21 @@
 
     function get_color(name)
     {
-        var c = Math.round(color(name));
+        /*var c = Math.round(color(name));
         if (isNaN(c))
             return '#dddddd';	// fallback color
 
         return colors[c];
+        */
+        return "#8CBA80";
     }
 
     function get_color_rect(name)
     {
        if(name == "important") {
-           return "#0000FF"
+           return "#ddd"
        } else {
-           return "#00FF00"
+           return "#ddd"
        }
     }
 
@@ -266,6 +288,7 @@
             .attr("dy", ".31em")
             .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
             .attr("transform", function(d) { return d.x < 180 ? "translate(50)" : "rotate(180)translate(-50)"; })
+            .attr("fill", "#4D5382")
             .text(function(d) { return d.name; });
 
     // inner nodes
@@ -274,15 +297,24 @@
             .data(data.inner)
             .enter().append("g")
             .attr("class", "inner_node")
+            .attr('margin', '2px')
             .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
             .on("mouseover", mouseover)
             .on("mouseout", mouseout);
+
 
     inode.append('rect')
             .attr('width', rect_width)
             .attr('height', rect_height)
             .attr('id', function(d) { return d.id; })
             .attr('fill', function(d) { return get_color_rect(d.name); });
+
+    inode.append('circle')
+            .attr('r', 10)
+            .attr('id', function(d) { return d.id + 'innercircle    '; })
+            .attr('fill', function(d) { return "#000000"; })
+            .attr('class', 'inner_circle')
+            .attr("transform", "translate(" + rect_width/4 + "," + rect_height*0.5+ ")");
 
     inode.append("text")
             .attr('id', function(d) { return d.id + '-txt'; })
