@@ -5,6 +5,7 @@
     <meta name="description" content="An abstract mapping for parameters. Works best if first tag is 'unique' among the tracklist, and the second tag applies to multiple tracks"/>
     <meta name="mintags" content="2" />
     <meta name="maxtags" content="2" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Tags Questions</title>
 
     <style>
@@ -41,7 +42,7 @@
 
         .outer_node circle.highlight
         {
-            fill: #8CBA80;
+            fill: #003200;
             stroke-width: 2px;
         }
 
@@ -62,11 +63,10 @@
             stroke: #315B7E;
             stroke-width: 4px;
         }
-
-
     </style>
 </head>
 <body>
+<div id="mainbody"></div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="scripts/data.js"></script>
 <script>
@@ -107,7 +107,7 @@
         if (d == null)
             return;
 
-        i = { id: 'i' + inner.length, name: d[0], related_links: [] };
+        i = { id: 'i' + inner.length, name: d[1], related_links: [] };
         i.related_nodes = [i.id];
         inner.push(i);
 
@@ -174,7 +174,7 @@
             .clamp(true);
 
     var diameter = 2000;
-    var rect_width = 300;
+    var rect_width = 200;
     var rect_height = 30;
 
     var link_width = "0.75px";
@@ -248,7 +248,7 @@
             .projection(function(d) { return [d.y, d.x]; });
 
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#mainbody").append("svg")
             .attr("width", diameter)
             .attr("height", diameter)
             .append("g")
@@ -300,28 +300,90 @@
             .attr('margin', '2px')
             .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
             .on("mouseover", mouseover)
-            .on("mouseout", mouseout);
+            .on("mouseout", mouseout)
 
 
     inode.append('rect')
             .attr('width', rect_width)
             .attr('height', rect_height)
             .attr('id', function(d) { return d.id; })
-            .attr('fill', function(d) { return get_color_rect(d.name); });
-
+            .attr('fill', function(d) { return get_color_rect(d.name); })
+            .append("title").text(function (d)  {
+        return d.name;
+    });
     inode.append('circle')
             .attr('r', 10)
             .attr('id', function(d) { return d.id + 'innercircle    '; })
             .attr('fill', function(d) { return "#000000"; })
             .attr('class', 'inner_circle')
-            .attr("transform", "translate(" + rect_width/4 + "," + rect_height*0.5+ ")");
+            .attr("transform", "translate(" + rect_width/5 + "," + rect_height*0.5+ ")")
+            .append("title").text(function (d)  {
+            return d.name;
+    });
 
-    inode.append("text")
-            .attr('id', function(d) { return d.id + '-txt'; })
-            .attr('text-anchor', 'middle')
-            .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
-            .text(function(d) { return d.name; });
-
+    inode.append('text')
+            .text("?")
+            .style("fill", "#ffffff")
+            .attr("font-size", "15px")
+            .attr("text-style", "bold")
+            .attr("transform", "translate(" + ( rect_width/5 - 5) + "," + rect_height*0.7+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('circle')
+            .attr('r', 10)
+            .attr('id', function(d) { return d.id + 'innercircle    '; })
+            .attr('fill', function(d) { return "#000000"; })
+            .attr('class', 'inner_circle')
+            .attr("transform", "translate(" + rect_width*2/5 + "," + rect_height*0.5+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('text')
+            .text("?")
+            .style("fill", "#ffffff")
+            .attr("font-size", "15px")
+            .attr("text-style", "bold")
+            .attr("transform", "translate(" + ( 2 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('circle')
+            .attr('r', 10)
+            .attr('id', function(d) { return d.id + 'innercircle    '; })
+            .attr('fill', function(d) { return "#000000"; })
+            .attr('class', 'inner_circle')
+            .attr("transform", "translate(" + rect_width*3/5+ "," + rect_height*0.5+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('text')
+            .text("?")
+            .style("fill", "#ffffff")
+            .attr("font-size", "15px")
+            .attr("text-style", "bold")
+            .attr("transform", "translate(" + ( 3 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('circle')
+            .attr('r', 10)
+            .attr('id', function(d) { return d.id + 'innercircle    '; })
+            .attr('fill', function(d) { return "#000000"; })
+            .attr('class', 'inner_circle')
+            .attr("transform", "translate(" + rect_width*4/5 + "," + rect_height*0.5+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
+    inode.append('text')
+            .text("?")
+            .style("fill", "#ffffff")
+            .attr("font-size", "15px")
+            .attr("text-style", "bold")
+            .attr("transform", "translate(" + ( 4 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
+    .append("title").text(function (d)  {
+        return d.name;
+    });
     // need to specify x/y/etc
 
     d3.select(self.frameElement).style("height", diameter - 150 + "px");
