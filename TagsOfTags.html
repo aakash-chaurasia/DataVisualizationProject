@@ -93,14 +93,12 @@
                 .style("fill", function(d) {return colorScale(d.depth)})
                 .style("stroke", "brown")
                 .style("stroke-width", "1px")
-                .on("click", goback)
 
         d3.selectAll("g.node").filter(function(d) {return d.depth == 1})
                 .append("text")
                 .text(function(d) {return d.depth == 0 ? "Sun" : d.key})
                 .attr("y", 20)
                 .style("text-anchor", "middle")
-                .on("click", goback)
 
         d3.select("g.viz")
                 .selectAll("circle.ring")
@@ -111,13 +109,13 @@
                 .attr("r", function(d) {return d.r})
                 .attr("cx", function(d) {return d.x})
                 .attr("cy", function(d) {return d.y})
-                .on("click", goback)
-
+                
         orbit.on("tick", orbitTick);
 
         orbit.start();
 
         function orbitTick() {
+
 
             var newX = 500-center.x;
             var newY = 400-center.y;
@@ -157,6 +155,7 @@
 
         function customRevolution(d)
         {
+
             if (d.name == "time") {
                 return d.depth * .25;
             }
@@ -167,8 +166,14 @@
         }
 
          function goback(d)
-        {   
-        window.open('contentMap.html',"_self");
+        { 
+            if(d.children){
+                window.open('contentMap.html',"_self");
+                
+
+            }else{  
+                window.open('QuestionsAndAnswers.html',"_self");
+            }    
         }
 
 
