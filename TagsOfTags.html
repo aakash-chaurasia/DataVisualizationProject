@@ -84,7 +84,7 @@
                 .attr("class", "node")
                 .attr("transform", function(d) {return "translate(" +d.x +"," + d.y+")"})
                 .on("mouseover", nodeOver)
-                .on("click", recenter)
+                .on("click", goback)
 
         d3.selectAll("g.node")
                 .append("circle")
@@ -93,12 +93,14 @@
                 .style("fill", function(d) {return colorScale(d.depth)})
                 .style("stroke", "brown")
                 .style("stroke-width", "1px")
+                .on("click", goback)
 
         d3.selectAll("g.node").filter(function(d) {return d.depth == 1})
                 .append("text")
                 .text(function(d) {return d.depth == 0 ? "Sun" : d.key})
                 .attr("y", 20)
                 .style("text-anchor", "middle")
+                .on("click", goback)
 
         d3.select("g.viz")
                 .selectAll("circle.ring")
@@ -109,6 +111,7 @@
                 .attr("r", function(d) {return d.r})
                 .attr("cx", function(d) {return d.x})
                 .attr("cy", function(d) {return d.y})
+                .on("click", goback)
 
         orbit.on("tick", orbitTick);
 
@@ -116,8 +119,8 @@
 
         function orbitTick() {
 
-            var newX = 900- center.x;
-            var newY = 500 - center.y;
+            var newX = 500-center.x;
+            var newY = 400-center.y;
 
             d3.select("g.viz")
                     .attr("transform", "scale("+(1 + (center.depth *.1)) +") translate(" + newX  + "," + newY + ")")
@@ -141,7 +144,7 @@
         function changeCenter() {
             recenter = false;
             orbit.stop();
-            var newX = 200 - center.x;
+            var newX = 400 - center.x;
             var newY = 200 - center.y;
 
             d3.select("g.viz")
@@ -163,11 +166,17 @@
             return d.depth
         }
 
+         function goback(d)
+        {   
+        window.open('contentMap.html',"_self");
+        }
+
+
         function nodeOver(d) {
-            orbit.stop();
+            //orbit.stop();
 
             center = d;
-            changeCenter();
+           // changeCenter();
 
             d3.selectAll("text.sat").remove();
 
