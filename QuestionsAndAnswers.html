@@ -12,9 +12,15 @@
                 url: 'http://192.168.0.14:5000/onLoadFourth/'+input,
                 method: 'GET', // or GET
                 success: function(msg) {
-                    $(".se-pre-con").fadeOut("slow");
                     mess = msg;
                     postProcess(mess);
+                    $(".se-pre-con").fadeOut("slow");
+                },
+                error: function (request, status, error) {
+                    $(".se-pre-con").fadeOut("slow");
+                    if(status == 'error') {
+                        alert("Something Wrong Happened. Please Try again later");
+                    }
                 }
             });
 
@@ -46,7 +52,7 @@
             loadBooks(tags);
         }
         function loaddata() {
-            datatosend = '54115';
+            var datatosend = sessionStorage.getItem("questionid");
             ajaxmagic(datatosend);
         }
     </script>
