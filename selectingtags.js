@@ -1,34 +1,22 @@
 var flag = true;
-
+var displaytags = "";
 $(document).ready(function(){
 	var lastValueOfQuestions = "";
 	var newValueOfQuestions="";
-		
+
 	$("#questiontextbox").on("change paste keyup", function(e) {
 					
 					if(e.keyCode == 32 ){	
 					 var tags = $(this).val(); 
-							var checkwords = tags.split(" ");
-							var displaytags="";
+				     var checkwords = tags.split(" ");
+                    
+    
+                        displaytags = "";
 							for (var i=0 ; i< checkwords.length;i++){
-									if(checkInStackOverflowTags(checkwords[i])){
-											if(displaytags == null){
-												displaytags = checkwords[i];
-											} else {
-                                                
-												displaytags = displaytags + "  " +checkwords[i];
-                                        
-											}
-									}
-                                
-									$("#displaypara").text(displaytags);    
+								    checkInStackOverflowTags(checkwords[i]);	    
 						}
                         
-                        if(displaytags.trim()== ""){
-                            flag = true;
-                        }else{
-                            flag = false;
-                        }
+                        
 						lastValueOfQuestions = $(this).val();
 					}
 					}							 
@@ -55,24 +43,45 @@ function checkBlankInputValues(){
 }
 
  function checkInStackOverflowTags(inputtag){
-				 var stackovertags = ["evercookie","memory-address","radio-button","facebook-graph-api-v2.0","static-content",
+				/* var stackovertags = ["evercookie","memory-address","radio-button","facebook-graph-api-v2.0","static-content",
 "into-outfile","sashform","aquery","installer","scaffolding","administrative","glibc","cac","signed","code-timing","equalizer",
 "fabric8","pom.xml","corpus","google-chrome-extension","content-assist","google-play-services","shared-memory","filestructure",
 "xmppframework","adobe","datefield","spooler","value-of","javacaps","automated-refactoring","greenplum","kdb","spec","log4cplus",
 "author","junit-theory","object-layout","package-info","pre-commit-hook","netui","smali","versions","css3","ldapconnection",
 "money-format","opus","structural-search","plist"
 ];
-				 var flag = false;
-				 var i;
-				 for(i=0; i< stackovertags.length; i++){
-						 if(stackovertags[i]==inputtag){ 
-								 flag= true;
-								 break;
-						}
-				 }
-				 return flag;	 
-		 }	
+*/  
+     var urlLink = 'http://192.168.0.14:5000/checkTag/'+inputtag
+     $.ajax({
+        url: urlLink,
+        method: 'GET', // or GET
+        success: function(msg) {
+            var mess = msg;
+            if(mess == '1') {
+                callback(inputtag);
+            }
+        },
+        error: function (request, status, error) {
+            if(error != '') {
+                alert(error);
+            }
+        }
+    });
+}	
 
+function callback(inputTag) {
+    if(displaytags == null){
+        displaytags = inputTag;
+    } else {
+        displaytags = displaytags + "  " +inputTag;
+    }
+    $("#displaypara").text(displaytags);
+    if(displaytags.trim()== ""){
+                            flag = true;
+                        }else{
+                            flag = false;
+                        }
+}
 
  //Word cloud
 
