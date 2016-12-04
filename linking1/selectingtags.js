@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 	$("#submitbutton").on("click", function() {
 					if(not_empty){
-						window.open('contentMap.html','_blank');
+						window.open('contentMap.html',"_self");
 					}else{
 						alert("Enter a Question to proceed.");
 					}
