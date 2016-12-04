@@ -12,27 +12,69 @@
                 url: 'http://192.168.0.14:5000/onLoadFourth/'+input,
                 method: 'GET', // or GET
                 success: function(msg) {
+                    $(".se-pre-con").fadeOut("slow");
                     mess = msg;
-                    console.log(mess);
-                    alert(mess);
+                    postProcess(mess);
                 }
             });
-            return mess;
+
+        }
+        function postProcess(mess) {
+            var jsondata = JSON.parse(mess)
+            var titleQuestion = document.getElementById('titlequestion');
+            var textQuestion = document.getElementById('textquestion');
+            var contentQuestion = document.getElementById('contentquestion');
+
+            titleQuestion.innerHTML = jsondata[0][0];
+            textQuestion.innerHTML = jsondata[0][1];
+            contentQuestion.innerHTML = jsondata[0][2];
+            var flag = false;
+            jsondata.forEach(function (input) {
+                if(flag) {
+                    $.get("tpl/answer.html", function (data) {
+                        $("#answers").append(tplawesome(data, [{
+                            "title": input[0],
+                            "text": input[1],
+                            "code": input[2]
+                        }]));
+                    });
+                }
+                flag = true;
+            });
+            var tags = jsondata[0][3].replace(" \n","");
+            loadYoutube(tags);
+            loadBooks(tags);
         }
         function loaddata() {
-            datatosend = '88944';
-            result = ajaxmagic(datatosend);
+            datatosend = '54115';
+            ajaxmagic(datatosend);
         }
     </script>
+    <style>
+        .no-js #loader { display: none;  }
+        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("Preloader_3.gif") center no-repeat #fff;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </head>
 <body onLoad="loaddata()">
+<div class="se-pre-con"></div>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tasks"></span> &nbsp; Stack Overflow Recommender</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
         </ul>
     </div>
 </nav>
@@ -43,64 +85,28 @@
                 <div class="col-md-6 col-sm-6" style = "overflow: auto">
                     <H2 align="center"> QUESTION DETAILS </H2>
                     </br>
-                    <div class="well well-sm" id="titlequestion" >
-                        <Strong >
-                            Scheduled runnable invoked only once on startup.
+                    <div class="well well-sm">
+                        <Strong id="titlequestion" >
                         </Strong>
                     </div>
-                    <div class="well well-sm" id="textquestion">
-                        <p align="justify">
-                            I have an android app that has registered a   to get   (i have the required permissions and everything configured in the manifest).    when it gets it  it schedules a runnable to run every x minutes:         the same method is invoked also manually when the user launches the app.      when the app is manually launched  the scheduled runnable runs as expected   when the app has received   the scheduled runnable runs only once (successfully)  then stops and never runs again. there are no exceptions  but it doesn't run.      why might that be happening?
+                    <div class="well well-sm" >
+                        <p id="textquestion" align="justify">
                         </p>
                     </div>
-                    <div class="well well-sm" id="contentquestion">
-                        <p>
-                            broadcastreceiver boot_completed scheduledexecutorservice executor = executors.newscheduledthreadpool(1); executor.scheduleatfixedrate(new runnable() {     public void run() {      } }  0  2  timeunit.minutes);  boot_completed
+                    <div class="well well-sm" >
+                        <p id="contentquestion">
                         </p>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6" style = "overflow: auto">
                     <H2 align="center"> ANSWER DETAILS </H2>
-                    </br>
-                    <div class="well well-sm">
-                        <div class="well well-sm" id="titleanswer" >
-                            Scheduled runnable invoked only once on startup.
-                        </div>
-                        <div class="well well-sm" id="textanswer">
-                            why might that be happening?because your process was terminated  taking your   along with it.    use   to get control periodically..
-                        </div>
-                        <div class="well well-sm" id="contentanswer">
-                            scheduledexecutorservice alarmmanager
-                        </div>
+                    <div id="answers">
+
                     </div>
                 </div>
             </div>
             <div class = "row col-md-12" id = "bottom" overflow="auto">
-                <div class="col-md-12 col-sm-12" id="books"  >
-                    <div class="col-md-3">
-                        <a href="http://books.google.com/books/reader?id=MFRHWP6-nJkC&hl=&printsec=frontcover&output=reader&source=gbs_api" target="_blank">
-                            <img src="http://books.google.com/books/content?id=MFRHWP6-nJkC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" height="200px" width="150px"/>
-                            <p><b>Title: </b><i>Android DataBase Programming</i></p>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="http://books.google.com/books/reader?id=XP9bBAAAQBAJ&hl=&printsec=frontcover&output=reader&source=gbs_api" target="_blank">
-                            <img src="http://books.google.com/books/content?id=XP9bBAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api height="200px" width="150px"/>
-                            <p><b>Title: </b><i>Android SQLite Essentials</i></p>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="http://books.google.com/books/reader?id=-5zk12NiBBQC&hl=&printsec=frontcover&output=reader&source=gbs_api" target="_blank">
-                            <img src="http://books.google.com/books/content?id=-5zk12NiBBQC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" height="200px" width="150px"/>
-                            <p><b>Title: </b><i>The Definitive Guide to SQLite</i></p>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="http://books.google.com/books/reader?id=Z0knCgAAQBAJ&hl=&printsec=frontcover&output=reader&source=gbs_api" target="_blank">
-                            <img src="http://books.google.com/books/content?id=Z0knCgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" height="200px" width="150px"/>
-                            <p><b>Title: </b><i>Pro Android 5</i></p>
-                        </a>
-                    </div>
+                <div class="col-md-12 col-sm-12" id="books">
                 </div>
             </div>
         </div>
@@ -109,10 +115,6 @@
             <H2 align="center"> RECOMMENDED YOU TUBES</H2>
             <br>
             <div class="well well-sm" id="youtubesuggestions" >
-                <form action="#">
-                    <p><input type="text" id="search" placeholder="Type something..." autocomplete="off" class="form-control" /></p>
-                    <p><input type="submit" value="Search" class="form-control btn btn-success w100"></p>
-                </form>
                 <div id="results">
                 </div>
             </div>

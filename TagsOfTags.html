@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Orbit Layout Modes</title>
+    <title>Tag Centric Page</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <style>
 
     #viz, svg {
@@ -59,7 +60,7 @@
 
 
         sizeScale = d3.scale.linear().domain([1,5,10]).range([10,25,75]).clamp(true);
-        colorScale = d3.scale.linear().domain([0,1,2,3,4]).range(["rgb(161,208,120)","rgb(247,148,72)","rgb(225,203,208)","rgb(174,223,228)","rgb(245,132,102)"]);
+        colorScale = d3.scale.linear().domain([0,1,2]).range(["#b45033","#8CBA80","#306eff"]);
 
         planetColors = {Mercury: "gray", Venus: "#d6bb87", Earth: "#677188", Mars: "#7c5541", Jupiter: "#a36a3e", Saturn: "#e9ba85", Uranus: "#73cbf0", Neptune: "#6383d1"}
 
@@ -67,7 +68,7 @@
         orbit = d3.layout.orbit().size([800,800])
                 .revolution(customRevolution)
                 .orbitSize(function(d) {return d.depth >= 2 ? 6 : 4})
-                .speed(.25)
+                .speed(.15)
                 .mode([35,36,8,3,1])
                 .nodes(_data);
 
@@ -83,7 +84,7 @@
                 .attr("class", "node")
                 .attr("transform", function(d) {return "translate(" +d.x +"," + d.y+")"})
                 .on("mouseover", nodeOver)
-                .on("click", recenter)
+                .on("click", goback)
 
         d3.selectAll("g.node")
                 .append("circle")
@@ -92,12 +93,14 @@
                 .style("fill", function(d) {return colorScale(d.depth)})
                 .style("stroke", "brown")
                 .style("stroke-width", "1px")
+                .on("click", goback)
 
         d3.selectAll("g.node").filter(function(d) {return d.depth == 1})
                 .append("text")
                 .text(function(d) {return d.depth == 0 ? "Sun" : d.key})
                 .attr("y", 20)
                 .style("text-anchor", "middle")
+                .on("click", goback)
 
         d3.select("g.viz")
                 .selectAll("circle.ring")
@@ -115,8 +118,9 @@
 
         function orbitTick() {
 
-            var newX = 900- center.x;
-            var newY = 400 - center.y;
+
+            var newX = 500-center.x;
+            var newY = 400-center.y;
 
             d3.select("g.viz")
                     .attr("transform", "scale("+(1 + (center.depth *.1)) +") translate(" + newX  + "," + newY + ")")
@@ -140,7 +144,7 @@
         function changeCenter() {
             recenter = false;
             orbit.stop();
-            var newX = 200 - center.x;
+            var newX = 400 - center.x;
             var newY = 200 - center.y;
 
             d3.select("g.viz")
@@ -153,6 +157,7 @@
 
         function customRevolution(d)
         {
+
             if (d.name == "time") {
                 return d.depth * .25;
             }
@@ -162,11 +167,23 @@
             return d.depth
         }
 
+         function goback(d)
+        {
+            if(d.children){
+                window.open('contentMap.html',"_self");
+
+
+            }else{
+                window.open('QuestionsAndAnswers.html',"_self");
+            }
+        }
+
+
         function nodeOver(d) {
-            orbit.stop();
+            //orbit.stop();
 
             center = d;
-            changeCenter();
+           // changeCenter();
 
             d3.selectAll("text.sat").remove();
 
@@ -235,6 +252,16 @@
 </script>
 </head>
 <body onload="makeViz()">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tasks"></span> &nbsp; Stack Overflow Recommender</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+        </ul>
+    </div>
+</nav>
 <div id="viz"><svg></svg><div id="buttons"></div></div>
 <footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
