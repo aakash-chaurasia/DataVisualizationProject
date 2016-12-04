@@ -5,8 +5,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script>
+        function ajaxmagic(input) {
+            var mess = ""
+            $.ajax({
+                url: 'http://192.168.0.14:5000/onLoadFourth/'+input,
+                method: 'GET', // or GET
+                success: function(msg) {
+                    mess = msg;
+                    console.log(mess);
+                    alert(mess);
+                }
+            });
+            return mess;
+        }
+        function loaddata() {
+            datatosend = '88944';
+            result = ajaxmagic(datatosend);
+        }
+    </script>
 </head>
-<body>
+<body onLoad="loaddata()">
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
