@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    
+
 </head>
-<body>
+<body>    
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -23,35 +24,29 @@
         
     </div>
     <div class="questions" align="center">
-        <br>
-        <br>
-        <br>
-        <br>
-        <form>
-            <div class="form-group row" align="center">
-                <div class="col-sm-1" align="left">
-                   
-                </div>
-                <div class="col-sm-9" align="right">
-                    <input type="text" class="form-control form-control-lg" id="questiontextbox" placeholder="Enter your question here!!">
-                </div>
-								
-                <div class="col-sm-2" align="left">
-                    <button  id= "submitbutton" type="button" class="btn" ><span class="glyphicon glyphicon-search"></span> &nbsp;Submit</button>
-                </div>
-                
+         <form>
+            <div class="form-group">
+                <label for="questiontextbox">Enter Question Here !!</label>
+                <input type="text" class="form-control" id="questiontextbox" placeholder="Type Question Here">
             </div>
+            <div class="tags" align="center">
+                <strong> Recommended tags from question are :&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                <p id="displaypara"></p>
+	       </div>   
+        <br>     
+        <div class="form-group">
+            <label for="addtags">Add More Tags</label>
+            <input type="text" class="form-control" id="addtags" placeholder="Add tags">
+        </div>
+        <button type="button" class="btn btn-primary" id="submitbutton"><span class="glyphicon glyphicon-search"></span> &nbsp;Submit</button>
         </form>
     </div>
-    <div class="tags" align="center">
-       <p id="displaypara"></p>Tags here!!
-       
-	</div>    
+
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="d3.layout.cloud.js"></script>
-	<script src="selectingtags.js"></script>
+    <script src="selectingtags.js"></script>
 </html>
 

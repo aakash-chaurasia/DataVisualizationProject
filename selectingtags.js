@@ -1,13 +1,13 @@
+var flag = true;
+
 $(document).ready(function(){
 	var lastValueOfQuestions = "";
 	var newValueOfQuestions="";
-	var not_empty = false;
 		
 	$("#questiontextbox").on("change paste keyup", function(e) {
 					
-					if(e.keyCode == 32){
-					 var tags = $(this).val();
-					 		not_empty = true;
+					if(e.keyCode == 32 ){	
+					 var tags = $(this).val(); 
 							var checkwords = tags.split(" ");
 							var displaytags="";
 							for (var i=0 ; i< checkwords.length;i++){
@@ -15,35 +15,44 @@ $(document).ready(function(){
 											if(displaytags == null){
 												displaytags = checkwords[i];
 											} else {
-												displaytags = displaytags + "," +checkwords[i];
+                                                
+												displaytags = displaytags + "  " +checkwords[i];
+                                        
 											}
 									}
-									if(displaytags!==""){
-										not_empty = true;
-									}else{
-										not_empty = false;
-									}
-									$("#displaypara").text(displaytags);
-									
+                                
+									$("#displaypara").text(displaytags);    
 						}
+                        
+                        if(displaytags.trim()== ""){
+                            flag = true;
+                        }else{
+                            flag = false;
+                        }
 						lastValueOfQuestions = $(this).val();
 					}
 					}							 
 				);
-
-	$("#submitbutton").on("click", function() {
-					if(not_empty){
+    
+    $("#submitbutton").on("click", function() {
+					if(checkBlankInputValues()){
 						window.open('contentMap.html',"_self");
 					}else{
-						alert("Enter a Question to proceed.");
+						alert("Please add tags if you are not recommended any tags");
 					}
 					}							 
-				);				
+				);
 });
 
-
-
-
+function checkBlankInputValues(){
+    //var recommtag = $("#questiontextbox").val().trim();
+    var usertag = $("#addtags").val().trim();
+    if(flag && usertag == "" ){
+        return false;
+    } else {
+        return true;
+    }
+}
 
  function checkInStackOverflowTags(inputtag){
 				 var stackovertags = ["evercookie","memory-address","radio-button","facebook-graph-api-v2.0","static-content",
