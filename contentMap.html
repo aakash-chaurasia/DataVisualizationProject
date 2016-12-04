@@ -114,15 +114,21 @@
 
         if (d == null)
             return;
-
-        i = { id: 'i' + inner.length, name: d[1], related_links: [] };
+        var names = []
+        var tags = []
+        d.forEach(function(d1){
+            names.push(d1[1]);
+        });
+        d.forEach(function(d1){
+            d1[2].forEach(function(d2){
+            tags.push(d2);
+            });
+        });
+        i = { id: 'i' + inner.length, name: names, related_links: [] };
         i.related_nodes = [i.id];
         inner.push(i);
 
-        if (!Array.isArray(d[2]))
-            d[2] = [d[2]];
-
-        d[2].forEach(function(d1){
+        tags.forEach(function(d1){
 
             o = outer.get(d1);
 
@@ -310,16 +316,15 @@
             .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
             .on("mouseover", mouseover)
             .on("mouseout", mouseout)
+            .on("click", onclickCircle)
 
 
     inode.append('rect')
             .attr('width', rect_width)
             .attr('height', rect_height)
             .attr('id', function(d) { return d.id; })
-            .attr('fill', function(d) { return get_color_rect(d.name); })
-            .append("title").text(function (d)  {
-        return d.name;
-    });
+            .attr('fill', function(d) { return get_color_rect(d.name); });
+
     inode.append('circle')
             .attr('r', 10)
             .attr('id', function(d) { return d.id + 'innercircle    '; })
@@ -327,7 +332,8 @@
             .attr('class', 'inner_circle')
             .attr("transform", "translate(" + rect_width/5 + "," + rect_height*0.5+ ")")
             .append("title").text(function (d)  {
-            return d.name;
+            console.log(d);
+            return d.name[0];
     });
 
     inode.append('text')
@@ -337,7 +343,7 @@
             .attr("text-style", "bold")
             .attr("transform", "translate(" + ( rect_width/5 - 5) + "," + rect_height*0.7+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[0];
     });
     inode.append('circle')
             .attr('r', 10)
@@ -346,7 +352,7 @@
             .attr('class', 'inner_circle')
             .attr("transform", "translate(" + rect_width*2/5 + "," + rect_height*0.5+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[1];
     });
     inode.append('text')
             .text("?")
@@ -355,7 +361,7 @@
             .attr("text-style", "bold")
             .attr("transform", "translate(" + ( 2 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[1];
     });
     inode.append('circle')
             .attr('r', 10)
@@ -364,7 +370,7 @@
             .attr('class', 'inner_circle')
             .attr("transform", "translate(" + rect_width*3/5+ "," + rect_height*0.5+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[2];
     });
     inode.append('text')
             .text("?")
@@ -373,7 +379,7 @@
             .attr("text-style", "bold")
             .attr("transform", "translate(" + ( 3 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[2];
     });
     inode.append('circle')
             .attr('r', 10)
@@ -382,7 +388,7 @@
             .attr('class', 'inner_circle')
             .attr("transform", "translate(" + rect_width*4/5 + "," + rect_height*0.5+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[3];
     });
     inode.append('text')
             .text("?")
@@ -391,7 +397,7 @@
             .attr("text-style", "bold")
             .attr("transform", "translate(" + ( 4 * rect_width/5 - 5) + "," + rect_height*0.7+ ")")
     .append("title").text(function (d)  {
-        return d.name;
+        return d.name[3];
     });
     // need to specify x/y/etc
 
@@ -427,6 +433,15 @@
     function onclick(d)
     {   
         window.open('TagsOfTags.html',"_self");
+
+    }
+     function onclickCircle(d)
+    {
+        window.open('QuestionsAndAnswers.html',"_self");
+        sessionStorage.setItem("questionid", d);
+        console.log("trying to send save question id");
+        console.log(d);
+
     }
 
 </script>
