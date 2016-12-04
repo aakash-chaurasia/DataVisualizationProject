@@ -482,10 +482,7 @@ function conceptmap(ques) {
     function onclickCircle(d)
     {
         window.open('QuestionsAndAnswers.html',"_self");
-        sessionStorage.setItem("questionid", d);
-        console.log("trying to send save question id");
-        console.log(d);
-
+        sessionStorage.setItem("questionid", d.id);
     }
 
 

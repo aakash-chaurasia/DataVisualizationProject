@@ -27,15 +27,45 @@
         stroke-opacity: .15;
 
     }
-
+      .no-js #loader { display: none;  }
+    .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("Preloader_3.gif") center no-repeat #fff;
+    }
 </style>
 <script>
 
+    function ajaxmagic() {
+        var mess = ""
+        $.ajax({
+            url: 'http://192.168.0.14:5000/tagsOfTags/',
+            method: 'GET', // or GET
+            success: function(msg) {
+                mess = msg;
+                postProcess(mess);
+                $(".se-pre-con").fadeOut("slow");
+            },
+            error: function (request, status, error) {
+                $(".se-pre-con").fadeOut("slow");
+                if(status == 'error') {
+                    alert("Something Wrong Happened. Please Try again later");
+                }
+            }
+        });
 
-    function makeViz() {
-
-        d3.json("scripts/d3.json", function(data) {drawOrbit(data)});
-
+    }
+    function postProcess(mess) {
+        var jsondata = JSON.parse(mess)
+        drawOrbit(jsondata);
+    }
+    function loaddata() {
+        ajaxmagic();
     }
 
     function drawOrbit(_data) {
@@ -172,8 +202,12 @@
             if(d.children){
                 window.open('contentMap.html',"_self");
             }else{
-
                 window.open('QuestionsAndAnswers.html',"_self");
+                console.log("parent");
+                console.log(d);
+                sessionStorage.setItem("questionid", d.name);
+                var a = sessionStorage.getItem("qid");
+                console.log(a)
             }
         }
 
@@ -250,7 +284,8 @@
 
 </script>
 </head>
-<body onload="makeViz()">
+<body onload="loaddata()">
+<div class="se-pre-con"></div>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -265,6 +300,8 @@
 <footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="scripts/d3.layout.orbit.js" charset="utf-8" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </footer>
 </body>
 </html>
