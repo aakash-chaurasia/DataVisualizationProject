@@ -171,10 +171,20 @@
         {
             if(d.children){
                 window.open('contentMap.html',"_self");
+                console.log("Children");
+                console.log(d);
+                sessionStorage.setItem("qid", d.name);
+                var a = sessionStorage.getItem("qid");
+                console.log(a)
 
 
             }else{
                 window.open('QuestionsAndAnswers.html',"_self");
+                console.log("parent");
+                console.log(d);
+                sessionStorage.setItem("qid", d.name);
+                var a = sessionStorage.getItem("qid");
+                console.log(a)
             }
         }
 

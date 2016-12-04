@@ -438,9 +438,13 @@
      function onclickCircle(d)
     {
         window.open('QuestionsAndAnswers.html',"_self");
-        sessionStorage.setItem("questionid", d);
-        console.log("trying to send save question id");
+        sessionStorage.setItem("questionid", d.id);
+        console.log("checking d");
         console.log(d);
+        console.log(d.id);
+        console.log("trying to send save question id");
+        var a = sessionStorage.getItem("questionid");
+        console.log(a);
 
     }
 
