@@ -282,7 +282,7 @@
             .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
             .on("mouseover", mouseover)
             .on("mouseout", mouseout)
-            .on("onclick", onclick);
+            .on("click", onclick);
 
     onode.append("circle")
             .attr('id', function(d) { return d.id })
@@ -425,13 +425,8 @@
     }
 
     function onclick(d)
-    {
-        for (var i = 0; i < d.related_nodes.length; i++)
-        {
-             window.open('TagsOfTags.html',"_self");
-        }
-
-       
+    {   
+        window.open('TagsOfTags.html',"_self");
     }
 
 </script>
