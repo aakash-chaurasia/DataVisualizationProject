@@ -159,15 +159,15 @@ function conceptmap(ques) {
             return;
         var names = []
         var tags = []
+        var qids = []
         d.forEach(function(d1){
             names.push(d1[1]);
-        });
-        d.forEach(function(d1){
+            qids.push(d1[0]);
             d1[2].forEach(function(d2){
-            tags.push(d2);
+                tags.push(d2);
             });
         });
-        i = { id: 'i' + inner.length, name: names, related_links: [] };
+        i = { id: 'i' + inner.length, name: names, related_links: [], qid: qids };
         i.related_nodes = [i.id];
         inner.push(i);
 
@@ -330,7 +330,6 @@ function conceptmap(ques) {
             .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"})
             .on("mouseover", mouseover)
             .on("mouseout", mouseout)
-            .on("click", onclickCircle)
 
 
     inode.append('rect')
@@ -413,8 +412,54 @@ function conceptmap(ques) {
     .append("title").text(function (d)  {
         return d.name[3];
     });
-    // need to specify x/y/etc
 
+    inode.append('rect')
+            .on("click", function (d) {
+                onclickCircle(d.qid[0])
+            })
+            .attr('width', 15)
+            .attr('height', rect_height)
+            .attr('transform', 'translate(' + (rect_width/5 - 6)+ ",0)")
+            .attr('visibility','hidden')
+            .append("title").text(function (d)  {
+                 return d.name[0];
+            });
+    inode.append('rect')
+            .on("click", function (d) {
+                onclickCircle(d.qid[0])
+            })
+            .attr('width', 15)
+            .attr('height', rect_height)
+            .attr('transform', 'translate(' + (2 * rect_width/5 - 6)+ ",0)")
+            .attr('visibility','hidden')
+            .append("title").text(function (d)  {
+                return d.name[1];
+            });
+    inode.append('rect')
+            .on("click", function (d) {
+                onclickCircle(d.qid[0])
+            })
+            .attr('width', 15)
+            .attr('height', rect_height)
+            .attr('transform', 'translate(' + (3 * rect_width/5 - 6)+ ",0)")
+            .attr('visibility','hidden')
+            .append("title").text(function (d)  {
+        return d.name[2];
+    });
+    inode.append('rect')
+            .on("click", function (d) {
+                onclickCircle(d.qid[0])
+            })
+            .attr('width', 15)
+            .attr('height', rect_height)
+            .attr('transform', 'translate(' + ((4 * rect_width/5) - 6)+ ",0)")
+            .attr('visibility','hidden')
+            .append("title").text(function (d)  {
+        return d.name[3];
+    });
+
+
+    // need to specify x/y/etc
     d3.select(self.frameElement).style("height", diameter - 150 + "px");
     }
     function get_color(name)
@@ -482,8 +527,11 @@ function conceptmap(ques) {
     function onclickCircle(d)
     {
         window.open('QuestionsAndAnswers.html',"_self");
-        sessionStorage.setItem("questionid", d.id);
+        sessionStorage.setItem("questionid", d);
     }
+//TODO concept map
+    //TODO orbital names instead of ids
+    //TODO q and a scroll
 
 
 </script>
