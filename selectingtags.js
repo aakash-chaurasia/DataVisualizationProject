@@ -1,7 +1,10 @@
 var flag = true;
+var user_flag = true;
 var displaytags = "";
+var lastValueOfQuestions = ""
+var validUserTag = ""
 $(document).ready(function(){
-	var lastValueOfQuestions = "";
+	
 	var newValueOfQuestions="";
 
 	$("#questiontextbox").on("change paste keyup", function(e) {
@@ -17,16 +20,33 @@ $(document).ready(function(){
 						}
                         
                         
-						lastValueOfQuestions = $(this).val();
+						//lastValueOfQuestions = $(this).val();
 					}
 					}							 
 				);
+
+$("#addtags").on("change paste keyup", function(e){
+	if(e.keyCode == 32){
+		var tags = $(this).val();
+		var userwords = tags.split(" ");
+
+		displayusertag = "";
+		for (var i=0 ; i< userwords.length;i++){
+			checkInStackOverflowUserTags(userwords[i]);	    
+		}
+
+	}
+
+});
+
     
     $("#submitbutton").on("click", function() {
+
 					if(checkBlankInputValues()){
-						window.open('contentMap.html',"_self");
+						savingTags(lastValueOfQuestions,validUserTag);
+						//window.open('contentMap.html',"_self");
 					}else{
-						alert("Please add tags if you are not recommended any tags");
+						alert("Please add tags if you are not getting any recommended tags");
 					}
 					}							 
 				);
@@ -34,13 +54,18 @@ $(document).ready(function(){
 
 function checkBlankInputValues(){
     //var recommtag = $("#questiontextbox").val().trim();
-    var usertag = $("#addtags").val().trim();
-    if(flag && usertag == "" ){
+    //var usertag = $("#addtags").val().trim();
+    if(flag && user_flag){
         return false;
     } else {
         return true;
     }
 }
+
+
+
+ 
+
 
  function checkInStackOverflowTags(inputtag){
 				/* var stackovertags = ["evercookie","memory-address","radio-button","facebook-graph-api-v2.0","static-content",
@@ -72,8 +97,10 @@ function checkBlankInputValues(){
 function callback(inputTag) {
     if(displaytags == null){
         displaytags = inputTag;
+        lastValueOfQuestions = inputTag;
     } else {
-        displaytags = displaytags + "  " +inputTag;
+        displaytags = displaytags + " " +inputTag;
+        lastValueOfQuestions = displaytags + " " +inputTag;
     }
     $("#displaypara").text(displaytags);
     if(displaytags.trim()== ""){
@@ -82,6 +109,73 @@ function callback(inputTag) {
                             flag = false;
                         }
 }
+
+
+function checkInStackOverflowUserTags(inputtag){
+				/* var stackovertags = ["evercookie","memory-address","radio-button","facebook-graph-api-v2.0","static-content",
+"into-outfile","sashform","aquery","installer","scaffolding","administrative","glibc","cac","signed","code-timing","equalizer",
+"fabric8","pom.xml","corpus","google-chrome-extension","content-assist","google-play-services","shared-memory","filestructure",
+"xmppframework","adobe","datefield","spooler","value-of","javacaps","automated-refactoring","greenplum","kdb","spec","log4cplus",
+"author","junit-theory","object-layout","package-info","pre-commit-hook","netui","smali","versions","css3","ldapconnection",
+"money-format","opus","structural-search","plist"
+];
+*/  
+     var urlLink = 'http://192.168.0.14:5000/checkTag/'+inputtag
+     $.ajax({
+        url: urlLink,
+        method: 'GET', // or GET
+        success: function(msg) {
+            var mess = msg;
+            if(mess == '1') {
+                callback_user(inputtag);
+            }
+        },
+        error: function (request, status, error) {
+            if(error != '') {
+                alert(error);
+            }
+        }
+    });
+}	
+
+function callback_user(inputTag) {
+    if(displayusertag == null){
+        displayusertag = inputTag;
+        validUserTag = inputTag;
+    } else {
+        displayusertag = displayusertag + " " +inputTag;
+        validUserTag = displayusertag + " " +inputTag;
+    }
+    $("#displayusertag").text(displayusertag);
+    if(displayusertag.trim()== ""){
+                            user_flag = true;
+                        }else{
+                            user_flag = false;
+                        }
+}
+
+function savingTags(lastValueOfQuestions,validUserTag){
+        $.ajax({
+            url: 'http://192.168.0.16:5000/writeAfterFirst/'+lastValueOfQuestions.trim()+" "+validUserTag.trim()
+            method: 'GET', // or GET
+            success: function(msg) {
+                onSubmit();
+            },
+            error: function (request, status, error) {
+                if(status == 'error') {
+                    alert("Something Wrong Happened. Please Try again later");
+                }
+            }
+        });
+
+
+    }
+
+ function onSubmit(){
+ 	window.open('contentMap.html',"_self");
+ }
+
+
 
  //Word cloud
 
