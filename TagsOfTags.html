@@ -44,7 +44,7 @@
     function ajaxmagic() {
         var mess = ""
         $.ajax({
-            url: 'http://192.168.0.16:5000/tagsOfTags/',
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/tagsOfTags/',
             method: 'GET', // or GET
             success: function(msg) {
                 mess = msg;
@@ -213,7 +213,7 @@
 
         function saveSecondInput(tag) {
             $.ajax({
-                url: 'http://192.168.0.16:5000/writeAfterFirst/'+tag,
+                url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterFirst/'+tag,
                 method: 'GET', // or GET
                 success: function(msg) {
                     mess = msg;

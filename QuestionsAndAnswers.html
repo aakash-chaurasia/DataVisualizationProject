@@ -9,7 +9,7 @@
         function ajaxmagic(input) {
             var mess = ""
             $.ajax({
-                url: 'http://192.168.0.16:5000/onLoadFourth/'+input,
+                url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/onLoadFourth/'+input,
                 method: 'GET', // or GET
                 success: function(msg) {
                     mess = msg;

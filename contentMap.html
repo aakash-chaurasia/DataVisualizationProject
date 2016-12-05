@@ -110,7 +110,7 @@
         var mess = "";
         var datam = questionsToTags;
         $.ajax({
-            url: 'http://192.168.0.16:5000/questionToTags/',
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/questionToTags/',
             method: 'GET', // or GET
             success: function(msg) {
                 mess = JSON.parse(msg);
@@ -129,7 +129,7 @@
     function savingTag(d){
         var tagName = d.name;
         $.ajax({
-            url: 'http://192.168.0.16:5000/writeAfterSecond/'+tagName,
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterSecond/'+tagName,
             method: 'GET', // or GET
             success: function(msg) {
                 onclick();
@@ -220,6 +220,7 @@ function conceptmap(ques) {
         links: links
     }
 
+    // sort the data -- TODO: have multiple sort options
     outer = data.outer;
     data.outer = Array(outer.length);
 
