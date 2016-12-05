@@ -89,7 +89,7 @@ function checkBlankInputValues(){
 "money-format","opus","structural-search","plist"
 ];
 */  
-     var urlLink = 'http://192.168.0.16:5000/checkTag/'+inputtag;
+     var urlLink = 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/checkTag/'+inputtag;
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET
