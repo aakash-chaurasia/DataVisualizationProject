@@ -1,0 +1,326 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tag Centric Page</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style>
+
+    #viz, svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    text {
+        pointer-events: none;
+    }
+
+    #buttons {
+        position: fixed;
+        top:0;
+        left:0;
+    }
+
+    circle.ring {
+        fill: none;
+        stroke: black;
+        stroke-width: 1px;
+        stroke-opacity: .15;
+
+    }
+      .no-js #loader { display: none;  }
+    .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url("Preloader_3.gif") center no-repeat #fff;
+    }
+</style>
+<script>
+
+    function ajaxmagic() {
+        var mess = ""
+        $.ajax({
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/tagsOfTags/',
+            method: 'GET', // or GET
+            success: function(msg) {
+                mess = msg;
+                postProcess(mess);
+                $(".se-pre-con").fadeOut("slow");
+            },
+            error: function (request, status, error) {
+                $(".se-pre-con").fadeOut("slow");
+                if(status == 'error') {
+                    alert("Something Wrong Happened. Please Try again later");
+                }
+            }
+        });
+
+    }
+    function postProcess(mess) {
+        var jsondata = JSON.parse(mess)
+        drawOrbit(jsondata);
+    }
+    function loaddata() {
+        ajaxmagic();
+    }
+
+    function drawOrbit(_data) {
+
+        var center = {};
+        var recenter = false;
+
+
+        for (var x=0;x < _data.children.length;x++) {
+            _data.children[x].size = _data.children[x].children ? _data.children[x].children.length : 0;
+        }
+
+        _data.children.sort(function(a,b) {
+            if (a.size > b.size) {
+                return 1;
+            }
+            if (a.size < b.size) {
+                return -1;
+            }
+            return 0;
+        })
+
+
+        sizeScale = d3.scale.linear().domain([1,5,10]).range([10,25,75]).clamp(true);
+        colorScale = d3.scale.linear().domain([0,1,2]).range(["#b45033","#8CBA80","#306eff"]);
+
+        planetColors = {Mercury: "gray", Venus: "#d6bb87", Earth: "#677188", Mars: "#7c5541", Jupiter: "#a36a3e", Saturn: "#e9ba85", Uranus: "#73cbf0", Neptune: "#6383d1"}
+
+
+        orbit = d3.layout.orbit().size([800,800])
+                .revolution(customRevolution)
+                .orbitSize(function(d) {return d.depth >= 2 ? 6 : 4})
+                .speed(.15)
+                .mode([35,36,8,3,1])
+                .nodes(_data);
+
+        center = orbit.nodes()[0];
+
+        d3.select("svg")
+                .append("g")
+                .attr("class", "viz")
+                .attr("transform", "translate(150,150)")
+                .selectAll("g.node").data(orbit.nodes())
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) {return "translate(" +d.x +"," + d.y+")"})
+                .on("mouseover", nodeOver)
+                .on("click", goback)
+
+        d3.selectAll("g.node")
+                .append("circle")
+                .attr("class", "satellite")
+                .attr("r", function(d) {return sizeScale(d.children ? d.children.length : 0)})
+                .style("fill", function(d) {return colorScale(d.depth)})
+                .style("stroke", "brown")
+                .style("stroke-width", "1px")
+                .on("click", goback)
+
+        d3.selectAll("g.node").filter(function(d) {return d.depth == 1})
+                .append("text")
+                .text(function(d) {return d.depth == 0 ? "Sun" : d.key})
+                .attr("y", 20)
+                .style("text-anchor", "middle")
+                .on("click", goback)
+
+        d3.select("g.viz")
+                .selectAll("circle.ring")
+                .data(orbit.orbitalRings())
+                .enter()
+                .insert("circle", "g")
+                .attr("class", "ring")
+                .attr("r", function(d) {return d.r})
+                .attr("cx", function(d) {return d.x})
+                .attr("cy", function(d) {return d.y})
+
+        orbit.on("tick", orbitTick);
+
+        orbit.start();
+
+        function orbitTick() {
+
+
+            var newX = 500-center.x;
+            var newY = 400-center.y;
+
+            d3.select("g.viz")
+                    .attr("transform", "scale("+(1 + (center.depth *.1)) +") translate(" + newX  + "," + newY + ")")
+
+
+            d3.selectAll("g.node")
+                    .attr("transform", function(d) {return "translate(" +d.x +"," + d.y+")"});
+
+            d3.selectAll("circle.ring")
+                    .attr("cx", function(d) {return d.x})
+                    .attr("cy", function(d) {return d.y});
+
+            d3.selectAll("line.visible")
+                    .attr("x1", function(p) {return p.source.x})
+                    .attr("x2", function(p) {return p.target.x})
+                    .attr("y1", function(p) {return p.source.y})
+                    .attr("y2", function(p) {return p.target.y})
+
+        }
+
+        function changeCenter() {
+            recenter = false;
+            orbit.stop();
+            var newX = 400 - center.x;
+            var newY = 200 - center.y;
+
+            d3.select("g.viz")
+                    .transition()
+                    .duration(1000)
+                    .attr("transform", "scale("+(1 + (center.depth *.1)) +") translate(" + newX + "," + newY + ")")
+                    .each("end", function() {orbit.start()})
+
+        }
+
+        function customRevolution(d)
+        {
+
+            if (d.name == "time") {
+                return d.depth * .25;
+            }
+            if (d.name == "geo") {
+                return -d.depth * .25;
+            }
+            return d.depth
+        }
+
+         function goback(d)
+        {
+            if(d.children){
+                saveSecondInput(d.name);
+            }else{
+                window.open('QuestionsAndAnswers.html',"_self");
+                console.log("parent");
+                console.log(d);
+                sessionStorage.setItem("questionid", d.name);
+                var a = sessionStorage.getItem("qid");
+                console.log(a)
+            }
+        }
+
+        function saveSecondInput(tag) {
+            $.ajax({
+                url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterFirst/'+tag,
+                method: 'GET', // or GET
+                success: function(msg) {
+                    mess = msg;
+                    if(mess == '1') {
+                        window.open("contentMap.html", "_self");
+                    } else {
+                        alert("Something Wrong Happened. Please Try again later");
+                    }
+                },
+                error: function (request, status, error) {
+                    if(status == 'error') {
+                        alert("Something Wrong Happened. Please Try again later");
+                    }
+                }
+            });
+        }
+
+        function nodeOver(d) {
+            //orbit.stop();
+
+            center = d;
+           // changeCenter();
+
+            d3.selectAll("text.sat").remove();
+
+            d3.selectAll("line.visible").remove();
+
+            if (d.children) {
+                var lines = d.children.map(function(p) {return {source: d, target: p}})
+                d3.select("g.viz").selectAll("line.visible")
+                        .data(lines)
+                        .enter()
+                        .insert("line", "g")
+                        .attr("x1", function(p) {return p.source.x})
+                        .attr("x2", function(p) {return p.target.x})
+                        .attr("y1", function(p) {return p.source.y})
+                        .attr("y2", function(p) {return p.target.y})
+                        .attr("class", "visible")
+                        .style("stroke", "rgb(73,106,154)")
+                        .style("stroke-width", 2)
+            }
+
+            if (d.parent) {
+
+                d3.select("g.viz").selectAll("line.fake")
+                        .data([{source:d, target: d.parent}])
+                        .enter()
+                        .insert("line", "g")
+                        .attr("x1", function(p) {return p.source.x})
+                        .attr("x2", function(p) {return p.target.x})
+                        .attr("y1", function(p) {return p.source.y})
+                        .attr("y2", function(p) {return p.target.y})
+                        .attr("class", "visible")
+                        .style("stroke", "rgb(165,127,124)")
+                        .style("stroke-width", 3)
+            }
+
+
+            d3.selectAll("g.node")
+                    .filter(function(p) {return p == d || p == d.parent || (d.children ? d.children.indexOf(p) > -1 : false)})
+                    .append("text")
+                    .text(function(p) {return p.name})
+                    .style("text-anchor", "middle")
+                    .attr("y", 15)
+                    .attr("class", "sat")
+                    .style("fill", "none")
+                    .style("stroke", "white")
+                    .style("stroke-width", 3)
+                    .style("stroke-opacity", .7);
+
+            d3.selectAll("g.node")
+                    .filter(function(p) {return p == d || p == d.parent || (d.children ? d.children.indexOf(p) > -1 : false)})
+                    .append("text")
+                    .text(function(p) {return p.name})
+                    .style("text-anchor", "middle")
+                    .attr("y", 15)
+                    .attr("class", "sat");
+
+            d3.selectAll("g.node > circle").style("stroke", "brown").style("stroke-width", 1);
+
+            d3.select(this).select("circle").style("stroke", "black").style("stroke-width", 3);
+
+        }
+
+
+    }
+
+</script>
+</head>
+<body onload="loaddata()">
+<div class="se-pre-con"></div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tasks"></span> &nbsp; Stack Overflow Recommender</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+        </ul>
+    </div>
+</nav>
+<div id="viz"><svg></svg><div id="buttons"></div></div>
+<footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="scripts/d3.layout.orbit.js" charset="utf-8" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+</footer>
+</body>
+</html>
