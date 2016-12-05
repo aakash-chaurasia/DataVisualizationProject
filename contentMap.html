@@ -5,7 +5,7 @@
     <meta name="description" content="An abstract mapping for parameters. Works best if first tag is 'unique' among the tracklist, and the second tag applies to multiple tracks"/>
     <meta name="mintags" content="2" />
     <meta name="maxtags" content="2" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Question Centric Page</title>
 
     <style>
@@ -76,8 +76,8 @@
             background: url("Preloader_3.gif") center no-repeat #fff;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </head>
 <body onload="loaddata2()">
 <div class="se-pre-con"></div>
@@ -92,7 +92,7 @@
     </div>
 </nav>
 <div id="mainbody"></div>
-<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="scripts/data.js"></script>
 <script>
     //
@@ -101,16 +101,16 @@
     //
     // This work is licensed under the Creative Commons Attribution 4.0
     // International License. To view a copy of this license, visit
-    // https://creativecommons.org/licenses/by/4.0/.
+    // http://creativecommons.org/licenses/by/4.0/.
     //
-    // Inspired by https://www.findtheconversation.com/concept-map/
-    // Loosely based on https://bl.ocks.org/mbostock/4063550
+    // Inspired by http://www.findtheconversation.com/concept-map/
+    // Loosely based on http://bl.ocks.org/mbostock/4063550
     //
     function ajaxmagic() {
         var mess = "";
         var datam = questionsToTags;
         $.ajax({
-            url: 'https://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/questionToTags/',
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/questionToTags/',
             method: 'GET', // or GET
             success: function(msg) {
                 mess = JSON.parse(msg);
@@ -129,7 +129,7 @@
     function savingTag(d){
         var tagName = d.name;
         $.ajax({
-            url: 'https://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterSecond/'+tagName,
+            url: 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterSecond/'+tagName,
             method: 'GET', // or GET
             success: function(msg) {
                 onclick();
@@ -240,7 +240,7 @@ function conceptmap(ques) {
 
 
     // from d3 colorbrewer:
-    // This product includes color specifications and designs developed by Cynthia Brewer (https://colorbrewer.org/).
+    // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
     var colors = ["#a50026","#d73027","#f46d43","#fdae61","#fee090","#ffffbf","#e0f3f8","#abd9e9","#74add1","#4575b4","#313695"]
     var colorsForRect = ["#0000ff", "#00ff00"]
     var color = d3.scale.linear()
@@ -553,5 +553,5 @@ function conceptmap(ques) {
 
 
 </script>
-<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="http://apis.google.com/js/client.js?onload=init"></script>

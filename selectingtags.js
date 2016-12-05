@@ -89,7 +89,7 @@ function checkBlankInputValues(){
 "money-format","opus","structural-search","plist"
 ];
 */  
-     var urlLink = 'https://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/checkTag/'+inputtag;
+     var urlLink = 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/checkTag/'+inputtag;
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET
@@ -133,7 +133,7 @@ function checkInStackOverflowUserTags(inputtag){
 "money-format","opus","structural-search","plist"
 ];
 */
-     var urlLink = 'https://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/checkTag/'+inputtag;
+     var urlLink = 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/checkTag/'+inputtag;
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET
@@ -168,7 +168,7 @@ function callback_user(inputTag) {
 }
 
 function savingTags(lastValueOfQuestions,validUserTag){
-		var urlLink = 'https://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterFirst/'+lastValueOfQuestions.trim()+" "+validUserTag.trim();
+		var urlLink = 'http://ec2-35-163-152-231.us-west-2.compute.amazonaws.com:5000/writeAfterFirst/'+lastValueOfQuestions.trim()+" "+validUserTag.trim();
         $.ajax({
             url: urlLink,
             method: 'GET', // or GET
