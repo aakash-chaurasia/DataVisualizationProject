@@ -51,7 +51,7 @@ function checkBlankInputValues(){
 "money-format","opus","structural-search","plist"
 ];
 */  
-     var urlLink = 'http://192.168.0.14:5000/checkTag/'+inputtag
+     var urlLink = 'http://192.168.0.16:5000/checkTag/'+inputtag
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET

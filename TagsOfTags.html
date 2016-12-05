@@ -44,7 +44,7 @@
     function ajaxmagic() {
         var mess = ""
         $.ajax({
-            url: 'http://192.168.0.14:5000/tagsOfTags/',
+            url: 'http://192.168.0.16:5000/tagsOfTags/',
             method: 'GET', // or GET
             success: function(msg) {
                 mess = msg;
@@ -200,7 +200,7 @@
          function goback(d)
         {
             if(d.children){
-                window.open('contentMap.html',"_self");
+                saveSecondInput(d.name);
             }else{
                 window.open('QuestionsAndAnswers.html',"_self");
                 console.log("parent");
@@ -211,6 +211,25 @@
             }
         }
 
+        function saveSecondInput(tag) {
+            $.ajax({
+                url: 'http://192.168.0.16:5000/writeAfterFirst/'+tag,
+                method: 'GET', // or GET
+                success: function(msg) {
+                    mess = msg;
+                    if(mess == '1') {
+                        window.open("contentMap.html", "_self");
+                    } else {
+                        alert("Something Wrong Happened. Please Try again later");
+                    }
+                },
+                error: function (request, status, error) {
+                    if(status == 'error') {
+                        alert("Something Wrong Happened. Please Try again later");
+                    }
+                }
+            });
+        }
 
         function nodeOver(d) {
             //orbit.stop();

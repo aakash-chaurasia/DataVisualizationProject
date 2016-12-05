@@ -110,7 +110,7 @@
         var mess = "";
         var datam = questionsToTags;
         $.ajax({
-            url: 'http://192.168.0.14:5000/questionToTags/',
+            url: 'http://192.168.0.16:5000/questionToTags/',
             method: 'GET', // or GET
             success: function(msg) {
                 mess = JSON.parse(msg);
