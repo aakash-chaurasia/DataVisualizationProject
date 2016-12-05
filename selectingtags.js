@@ -10,30 +10,43 @@ $(document).ready(function(){
 	$("#questiontextbox").on("change paste keyup", function(e) {
 					
 					if(e.keyCode == 32 ){	
-					 var tags = $(this).val(); 
-				     var checkwords = tags.split(" ");
-                    
-    
-                        displaytags = "";
-							for (var i=0 ; i< checkwords.length;i++){
-								    checkInStackOverflowTags(checkwords[i]);	    
+					 var tags = $(this).val().trim(); 
+					 if(tags.length!=0){
+					 	var checkwords = tags.split(" ");
+                    	displaytags = "";
+						for (var i=0 ; i< checkwords.length;i++){
+							checkInStackOverflowTags(checkwords[i]);	    
 						}
                         
-                        
-						//lastValueOfQuestions = $(this).val();
+					}else{
+						displaytags = "";
+						$("#displaypara").text(displaytags);
+						flag = true;
 					}
-					}							 
+
+				}
+			}							 
 				);
 
 $("#addtags").on("change paste keyup", function(e){
 	if(e.keyCode == 32){
-		var tags = $(this).val();
-		var userwords = tags.split(" ");
+		var tags = $(this).val().trim();
+		if(tags.length!=0){
+			var userwords = tags.split(" ");
 
-		displayusertag = "";
-		for (var i=0 ; i< userwords.length;i++){
-			checkInStackOverflowUserTags(userwords[i]);	    
+			displayusertag = "";
+			for (var i=0 ; i< userwords.length;i++){
+					checkInStackOverflowUserTags(userwords[i]);	    
+			}
+
+		}else{
+			displayusertag = "";
+			$("#displayusertag").text(displayusertag);
+			user_flag = true;
+
+
 		}
+		
 
 	}
 
@@ -76,7 +89,7 @@ function checkBlankInputValues(){
 "money-format","opus","structural-search","plist"
 ];
 */  
-     var urlLink = 'http://192.168.0.14:5000/checkTag/'+inputtag
+     var urlLink = 'http://192.168.0.16:5000/checkTag/'+inputtag;
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET
@@ -120,7 +133,7 @@ function checkInStackOverflowUserTags(inputtag){
 "money-format","opus","structural-search","plist"
 ];
 */  
-     var urlLink = 'http://192.168.0.14:5000/checkTag/'+inputtag
+     var urlLink = 'http://192.168.0.16:5000/checkTag/'+inputtag;
      $.ajax({
         url: urlLink,
         method: 'GET', // or GET
@@ -155,8 +168,9 @@ function callback_user(inputTag) {
 }
 
 function savingTags(lastValueOfQuestions,validUserTag){
+		var urlLink = 'http://192.168.0.16:5000/writeAfterFirst/'+lastValueOfQuestions.trim()+" "+validUserTag.trim();
         $.ajax({
-            url: 'http://192.168.0.16:5000/writeAfterFirst/'+lastValueOfQuestions.trim()+" "+validUserTag.trim()
+            url: urlLink,
             method: 'GET', // or GET
             success: function(msg) {
                 onSubmit();
@@ -186,7 +200,7 @@ function savingTags(lastValueOfQuestions,validUserTag){
 										.range(["#CD5C5C", "#802A2A", "#C67171", "#8B3A3A", "#CD9B9B", "#BC8F8F", "#6F4242", "#856363", "#8B6969", "#EEE9E9", "#CDC9C9", "#8B8989"]);
                         
 
-						d3.layout.cloud().size([950, 350])
+						d3.layout.cloud().size([950, 300])
 										.words(frequency_list)
 										.rotate(0)
 										.fontSize(function(d) { return (d.size/8); })
